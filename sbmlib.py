@@ -9,7 +9,7 @@ library of mathematical functions for puzzles that weren't in numpy
 probably my favorite personal library
 the function names are weird since this is one of the first things I started making and I've used this library so much
 '''
-
+import unittest
  
 #(1.) returns how many times b goes into a 
 def hmti(a, b): 
@@ -289,10 +289,10 @@ def numFactors(x):
     
     if type(x)!=int: return "type error"
     
-    #initialize count as 0 since x could be prime
-    #and i as 2 since even prime numbers are divisible by 1
+    #initialize count as 1 since x could be prime
+    #and i as 2 since 1 is a trivial factor
     
-    i, count = 2, 0
+    i, count = 2, 1
     
     #check for all factors less than x's square root and increment count by 2 each time you find one
     #after all, every distinct factor of x less than its square root has exactly one factor greater than its square root
@@ -307,3 +307,23 @@ def numFactors(x):
     
     if i==x**.5: count += 1
     return count
+
+class Tester(unittest.TestCase):
+    def test_hmtl(self):
+        self.assertEqual(hmti(15,3), 1)
+        self.assertEqual(hmti(15,2), 0)
+        self.assertEqual(hmti(9,3), 2)
+    def test_isprime(self):
+        self.assertEqual(isprime(-1), False)
+        self.assertEqual(isprime(7), True)
+        self.assertEqual(isprime(2), True)
+        self.assertEqual(isprime(.5), False)
+    def test_sumofdigits(self):
+        self.assertEqual(sumofdigits(12345), 15)
+    def test_numFactors(self):
+        self.assertEqual(numFactors(121), 2)
+        self.assertEqual(numFactors(113), 1)
+        self.assertEqual(numFactors(6), 3)
+
+if __name__ == '__main__':
+     unittest.main()
