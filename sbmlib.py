@@ -38,7 +38,7 @@ def hmti(a, b):
 
     
 '''
-(2.) let's you know if n is prime
+(2.) lets you know if n is prime
 '''
 def isprime(n):
     '''
@@ -58,7 +58,7 @@ def isprime(n):
     elif n%2==0: return False
     '''
     you only have to check odd factors < 3 and >= square root of n for minimal processing
-    each distinct factor of n greater than n's quare root has exactly 1 corresponding distinct factor less than n's square root
+    each distinct factor of n greater than n's square root has exactly 1 corresponding distinct factor less than n's square root
     '''
     else:   
         cap, i = n**.5, 3
@@ -67,8 +67,8 @@ def isprime(n):
             i += 2
         '''
         prime if it's 2 or an odd number with no odd factors below or equal to its square root
-        for example, every odd number between 3 and 119 that isn't divisible by 3, 5, or 7 must be prime
-        would check for divisibility by 9 even though it's redundant
+        for example, every odd number between 3 and 119 that isn't divisible by 3, 5, or 7 must be prime (except 3, 5, and 7 of course)
+        this function would check for divisibility by 9 even though it's redundant
         '''
         return True
 
