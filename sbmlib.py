@@ -15,45 +15,42 @@ the function names are weird since this is one of the first things I started mak
 
 
 # (1.) returns how many times b goes into a
-def hmti(a, b):
-    if type(a) != int or type(b) != int:
+def how_many_times_in(numer, denom):
+    if type(numer) != int or type(denom) != int:
         return "type error"
-    if b == 0:
+    if denom == 0:
         return "divide by zero error"
-    elif b == 1:
+    elif denom == 1:
         return "infinite"
-    if a % b == 0:
+    if numer % denom == 0:
         i = 0
-        while a % b == 0:
-            a = a / b
+        while numer % denom == 0:
+            numer = numer / denom
             i += 1
         return i
     else:
-        return "not divisible"
+        return 0
 
 
 # (2.) lets you know if n is prime
-def isprime(n):
-    if type(n) != int:
+def is_prime(num):
+    if type(num) != int:
         return False
-    if n < 3:
-        if n == 2:
-            return True
-        else:
-            return False
-    elif n % 2 == 0:
+    if num < 3:
+        return num == 2
+    elif num % 2 == 0:
         return False
     else:
-        cap, i = n**.5, 3
-        while i <= cap:
-            if n % i == 0:
+        cap, incr = num**.5, 3
+        while incr <= cap:
+            if num % incr == 0:
                 return False
-            i += 2
+            incr += 2
         return True
 
 
 # (3.) rotate string to the left by a character
-def rotateleft(s):
+def rotate_left(s):
     if type(s) != str:
         return "type error"
     s += s[0]
@@ -86,15 +83,12 @@ def prime(n):
 
 
 # (5.) is p a circular prime?
-def circprime(p):
-    if type(p) != int:
-        return False
+def circ_prime(p):
     p = str(p)
-
     for n in p:
-        if not isprime(int(p)):
+        if not is_prime(int(p)):
             return False
-        p = rotateleft(p)
+        p = rotate_left(p)
 
     return True
 
@@ -105,7 +99,7 @@ def primefactors(n):
         return "type error"
     P = 3
     x = []
-    if isprime(n):
+    if is_prime(n):
         x.append(n)
         return x
     while n % 2 == 0:
@@ -130,27 +124,29 @@ def exsamedigits(a, b):
         return False
 
 
-def factorial(n):
-    if type(n) != int:
+# (8.) find the factorial of a number
+def factorial(number):
+    if type(number) != int:
         return "type error"
-    x = 1
-    while n > 1:
-        x = x * n
-        n -= 1
-    return x
+    incr = 1
+    while number > 1:
+        incr = incr * number
+        number -= 1
+    return incr
 
 
 # (9.) find the nth fibonacci number
-def fibn(n):
-    if type(n) != int:
+def fibonacci(index):
+    if type(index) != int:
         return "type error"
-    elif n < 0:
+    elif index < 0:
         return "index out of bounds"
-    a, b = 0, 1
-    while n > 0:
-        a, b = b, a+b
-        n -= 1
-    return a
+
+    first, second = 0, 1
+    while index > 0:
+        first, second = second, first + second
+        index -= 1
+    return first
 
 
 # (10.) find the sum of digits of integer n
@@ -179,16 +175,16 @@ def numFactors(x):
 
 
 class Tester(unittest.TestCase):
-    def test_hmtl(self):
-        self.assertEqual(hmti(15, 3), 1)
-        self.assertEqual(hmti(15, 2), 0)
-        self.assertEqual(hmti(9, 3), 2)
+    def test_how_many_times_in(self):
+        self.assertEqual(how_many_times_in(15, 3), 1)
+        self.assertEqual(how_many_times_in(15, 2), 0)
+        self.assertEqual(how_many_times_in(9, 3), 2)
 
-    def test_isprime(self):
-        self.assertEqual(isprime(-1), False)
-        self.assertEqual(isprime(7), True)
-        self.assertEqual(isprime(2), True)
-        self.assertEqual(isprime(.5), False)
+    def test_is_prime(self):
+        self.assertEqual(is_prime(-1), False)
+        self.assertEqual(is_prime(7), True)
+        self.assertEqual(is_prime(2), True)
+        self.assertEqual(is_prime(.5), False)
 
     def test_sumofdigits(self):
         self.assertEqual(sumofdigits(12345), 15)
@@ -197,6 +193,17 @@ class Tester(unittest.TestCase):
         self.assertEqual(numFactors(121), 2)
         self.assertEqual(numFactors(113), 1)
         self.assertEqual(numFactors(6), 3)
+
+    def test_circ_prime(self):
+        self.assertEqual(circ_prime(17), True)
+        self.assertEqual(circ_prime(29), False)
+
+    def test_fibonacci(self):
+        self.assertEquals(fibonacci(0), 0)
+        self.assertEquals(fibonacci(1), 1)
+        self.assertEquals(fibonacci(5), 5)
+        self.assertEquals(fibonacci(7), 13)
+        self.assertEquals(fibonacci(9), 34)
 
 
 if __name__ == '__main__':
