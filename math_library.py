@@ -243,7 +243,7 @@ def multiple_of(number, factor_list):
 
     try:
         new_number = int(number)
-        if number != new_number:
+        if float(number) != new_number:
             return error_message
     except:
         return error_message

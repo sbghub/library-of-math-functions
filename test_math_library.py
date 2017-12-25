@@ -139,6 +139,7 @@ class MathLibraryTest(unittest.TestCase):
         self.assertEqual(lexicographic_permutation(210, 6), "012")
 
     def test_multiple_of(self):
+        self.assertTrue(multiple_of("15.0", [3, 5]))
         self.assertTrue(multiple_of(15, [3, 5]))
         self.assertTrue(multiple_of(-4, 2))
         self.assertTrue(multiple_of(9.0, 3))
