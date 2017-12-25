@@ -10,7 +10,7 @@ from math_library import (
     factor_list,
     fibonacci,
     goldbach_pair,
-    is_integer,
+    int_input,
     is_prime,
     largest_prime_factor,
     least_common_multiple,
@@ -24,12 +24,14 @@ from math_library import (
 
 class MathLibraryTest(unittest.TestCase):
     def test_circular_prime(self):
+        self.assertEqual(circular_prime("ninety-seven"), "Please enter an integer")
         self.assertTrue(circular_prime(97))
         self.assertFalse(circular_prime(23))
         self.assertTrue(circular_prime(37))
         self.assertFalse(circular_prime(45))
 
     def test_choose(self):
+        self.assertEqual(choose(3.2, 1), "please enter positive integers")
         self.assertEqual(choose(5, 3), 10)
         self.assertEqual(choose(23, 10), 1144066)
 
@@ -90,11 +92,10 @@ class MathLibraryTest(unittest.TestCase):
         self.assertTrue(goldbach_pair(9), (7, 1))
         self.assertTrue(goldbach_pair(15), (13, 1))
 
-    def test_is_integer(self):
-        @is_integer
+    def test_int_input(self):
+        @int_input
         def test_func(number):
-            input_value = number
-            return isinstance(input_value, int)
+            return isinstance(number, int)
 
         self.assertTrue(test_func(1.0))
         self.assertEqual(test_func(1.0001), "Please enter an integer")
@@ -114,6 +115,7 @@ class MathLibraryTest(unittest.TestCase):
         self.assertEqual(is_prime('twenty three'), 'Please enter an integer')
 
     def test_largest_prime_factor(self):
+        self.assertEqual(largest_prime_factor('twenty three'), 'Please enter an integer')
         self.assertEqual(largest_prime_factor(29), 'Please enter a non-prime integer greater than 1')
         self.assertEqual(largest_prime_factor(0), 'Please enter a non-prime integer greater than 1')
         self.assertEqual(largest_prime_factor(28), 7)
@@ -145,9 +147,9 @@ class MathLibraryTest(unittest.TestCase):
         self.assertEqual(multiple_of('nine', 3), 'Please enter an integer and a list of factors')
 
     def test_nth_prime(self):
-        self.assertEqual(nth_prime(-2), 'Please enter an integer greater than 1')
+        self.assertEqual(nth_prime(-2), 'Please enter a positive integer')
         self.assertEqual(nth_prime(6.1), 'Please enter an integer')
-        self.assertEqual(nth_prime(0), 'Please enter an integer greater than 1')
+        self.assertEqual(nth_prime(0), 'Please enter a positive integer')
         self.assertEqual(nth_prime('six'), 'Please enter an integer')
         self.assertEqual(nth_prime(1.0), 2)
         self.assertEqual(nth_prime(2), 3)
@@ -163,7 +165,7 @@ class MathLibraryTest(unittest.TestCase):
         self.assertTrue(palindrome('amanaplanacanalpanama'))
 
     def test_triangular_number(self):
-        self.assertEqual(triangular_number(-1), "Please enter a positive integer greater than 0")
+        self.assertEqual(triangular_number(-1), "Please enter a positive integer")
         self.assertEqual(triangular_number(1), 1)
         self.assertEqual(triangular_number(5), 15)
         self.assertEqual(triangular_number(7), 28)
