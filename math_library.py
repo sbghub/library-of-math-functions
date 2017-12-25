@@ -9,15 +9,21 @@ Decorators:
 
 
 def int_input(function):
-    def function_wrapper(input_value):
+    def function_wrapper(*input_value):
         error_message = "Please enter an integer"
-        try:
-            adj_number = int(float(input_value))
-            if float(input_value) != adj_number:
-                raise Exception
-            return function(adj_number)
-        except:
-            return error_message
+        values = []
+
+        for value in input_value:
+            try:
+                adj_number = int(float(value))
+                if float(value) != adj_number:
+                    raise Exception
+                values.append(adj_number)
+            except:
+                return error_message
+        
+        func_input = (value for value in values)
+        return function(*func_input)
 
     return function_wrapper
 
@@ -29,8 +35,9 @@ Callable Functions:
 """
 
 
+@int_input
 def choose(total, choosing):
-    if not isinstance(total, int) or not isinstance(choosing, int) or total <= 0 or choosing <= 0:
+    if total <= 0 or choosing <= 0:
         return "please enter positive integers"
 
     return factorial(total) / (factorial(choosing) * factorial(total - choosing))

@@ -1,7 +1,8 @@
 import unittest
 from math_library import (
-    circular_prime,
+    int_input,
     choose,
+    circular_prime,
     collatz_sequence,
     consecutive_prime_sum,
     digit_sum,
@@ -10,7 +11,6 @@ from math_library import (
     factor_list,
     fibonacci,
     goldbach_pair,
-    int_input,
     is_prime,
     largest_prime_factor,
     least_common_multiple,
@@ -23,17 +23,17 @@ from math_library import (
 
 
 class MathLibraryTest(unittest.TestCase):
+    def test_choose(self):
+        self.assertEqual(choose(3.2, 1), "Please enter an integer")
+        self.assertEqual(choose(5, 3), 10)
+        self.assertEqual(choose(23, 10), 1144066)
+
     def test_circular_prime(self):
         self.assertEqual(circular_prime("ninety-seven"), "Please enter an integer")
         self.assertTrue(circular_prime(97))
         self.assertFalse(circular_prime(23))
         self.assertTrue(circular_prime(37))
         self.assertFalse(circular_prime(45))
-
-    def test_choose(self):
-        self.assertEqual(choose(3.2, 1), "please enter positive integers")
-        self.assertEqual(choose(5, 3), 10)
-        self.assertEqual(choose(23, 10), 1144066)
 
     def test_collatz_sequence(self):
         self.assertTrue(isinstance(collatz_sequence(2), list))
@@ -125,8 +125,7 @@ class MathLibraryTest(unittest.TestCase):
 
     def test_least_common_multiple(self):
         self.assertEqual(least_common_multiple([5, 10, 15]), 30)
-        self.assertEqual(least_common_multiple(
-            [2, 4, 6, 8]), least_common_multiple([8, 3]))
+        self.assertEqual(least_common_multiple([2, 4, 6, 8]), least_common_multiple([8, 3]))
 
     def test_lexicographic_permutation(self):
         self.assertTrue(isinstance(lexicographic_permutation("01", 1), str))
