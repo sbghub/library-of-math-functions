@@ -1,8 +1,36 @@
 from functools import reduce
 
 
+"""
+========================================================================
+Decorators:
+========================================================================
+"""
+
+
+def is_integer(function):
+    def function_wrapper(input_value):
+        error_message = "Please enter an integer"
+        try:
+            adj_number = int(float(input_value))
+            if float(input_value) != adj_number:
+                raise Exception
+            return function(adj_number)
+        except:
+            return error_message
+
+    return function_wrapper
+
+
+"""
+========================================================================
+Callable Functions:
+========================================================================
+"""
+
+
 def choose(total, choosing):
-    if not is_integer(total) or not is_integer(choosing) or total <= 0 or choosing <= 0:
+    if not isinstance(total, int) or not isinstance(choosing, int) or total <= 0 or choosing <= 0:
         return "please enter positive integers"
 
     return factorial(total) / (factorial(choosing) * factorial(total - choosing))
@@ -26,14 +54,15 @@ def circular_prime(number):
     return True
 
 
+@is_integer
 def collatz_sequence(number):
     error_message = "please enter a positive integer"
-    if is_integer(number):
-        number = int(number)
-        if number < 1:
-            return error_message
-    else:
+    # if is_integer(number):
+    #     number = int(number)
+    if number < 1:
         return error_message
+    # else:
+    #     return error_message
 
     result = [number]
     while number != 1:
@@ -46,6 +75,7 @@ def collatz_sequence(number):
     return result
 
 
+@is_integer
 def consecutive_prime_sum(number):
     incr = 1
     orig_incr, orig_num = incr, number
@@ -67,43 +97,48 @@ def consecutive_prime_sum(number):
     return False
 
 
+@is_integer
 def digit_sum(number):
-    if is_integer(number):
-        number = int(number)
-        if number < 0:
-            number *= -1
-    else:
-        return "Please enter an integer."
+    # if is_integer(number):
+    #     number = int(number)
+    if number < 0:
+        number *= -1
+    # else:
+    #     return "Please enter an integer."
 
     return sum(int(digit) for digit in list(str(number)))
 
 
+@is_integer
 def distinct_prime_factors(number):
     return list(filter(lambda x: is_prime(x), factor_list(number)))
 
 
+@is_integer
 def factorial(number):
     error_message = "Please enter a non-negative integer"
-    try:
-        check = float(number)
-        number = int(number)
-    except:
-        return error_message
+    # try:
+    #     check = float(number)
+    #     number = int(number)
+    # except:
+    #     return error_message
 
-    if check != number or number < 0:
+    # if check != number or number < 0:
+    if number < 0:
         return error_message
 
     return 1 if number == 0 else number * factorial(number - 1)
 
 
+@is_integer
 def factor_list(number):
     error_message = "Please enter a positive integer"
-    if is_integer(number):
-        number = int(number)
-        if number < 0:
-            return error_message
-    else:
+    # if is_integer(number):
+    #     number = int(number)
+    if number < 0:
         return error_message
+    # else:
+    #     return error_message
 
     result = set()
     root = int(number ** .5)
@@ -118,14 +153,15 @@ def factor_list(number):
     return result
 
 
+@is_integer
 def fibonacci(index):
     error_message = 'Please enter a positive integer'
-    if is_integer(index):
-        index = int(index)
-        if index < 0:
-            return error_message
-    else:
+    # if is_integer(index):
+    #     index = int(index)
+    if index < 0:
         return error_message
+    # else:
+    #     return error_message
 
     num_1, num_2 = 0, 1
     while index > 0:
@@ -135,12 +171,14 @@ def fibonacci(index):
     return num_1
 
 
+@is_integer
 def goldbach_pair(number):
     error_message = "please enter an odd composite number"
-    if not is_integer(number) or number % 2 == 0 or is_prime(number):
+    # if not is_integer(number) or number % 2 == 0 or is_prime(number):
+    if number % 2 == 0 or is_prime(number):
         return error_message
-    else:
-        number = int(number)
+    # else:
+    #     number = int(number)
 
     max_root = int((number / 2) ** .5)
     for i in range(1, max_root + 1):
@@ -152,20 +190,9 @@ def goldbach_pair(number):
     return False
 
 
-def is_integer(number):
-    try:
-        adj_number = int(float(number))
-        return float(number) == adj_number
-    except:
-        return False
-
-
+@is_integer
 def is_prime(number):
-    error_message = 'Please enter a positive integer greater than 1'
-
-    if not is_integer(number) or number < 0:
-        return error_message
-    elif number < 3:
+    if number < 3:
         return number == 2
     elif number % 2 == 0:
         return False
@@ -179,6 +206,7 @@ def is_prime(number):
         return True
 
 
+@is_integer
 def largest_prime_factor(number):
     error_message = 'Please enter a non-prime integer greater than 1'
     if not is_integer(number) or number <= 1 or is_prime(number):
@@ -235,21 +263,27 @@ def lexicographic_permutation(base, index):
 
 def multiple_of(number, factor_list):
     error_message = 'Please enter an integer and a list of factors'
-    if not is_integer(number):
+
+    try:
+        new_number = int(number)
+        if number != new_number:
+            return error_message
+    except:
         return error_message
 
     if isinstance(factor_list, int):
         factor_list = [factor_list]
 
-    return any(number % factor == 0 for factor in factor_list)
+    return any(new_number % factor == 0 for factor in factor_list)
 
 
+@is_integer
 def nth_prime(index):
     error_message = 'Please enter an integer greater than 1'
-    if not is_integer(index) or index < 1:
-        return error_message
 
-    if index == 1:
+    if index < 1:
+        return error_message
+    elif index == 1:
         return 2
 
     base = 1
@@ -272,14 +306,17 @@ def palindrome(text):
     return True
 
 
+@is_integer
 def triangular_number(index):
     error_message = "Please enter a positive integer greater than 0"
-    if not is_integer(index) or index < 1:
+    # if not is_integer(index) or index < 1:
+    if index < 1:
         return error_message
 
     return sum(range(index + 1))
 
 
+@is_integer
 def truncatable_prime(number):
     if not is_prime(number) or number < 10:
         return False

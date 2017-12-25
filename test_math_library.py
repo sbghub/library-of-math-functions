@@ -60,7 +60,7 @@ class MathLibraryTest(unittest.TestCase):
         self.assertEqual(distinct_prime_factors(646), [2, 17, 19])
 
     def test_factor_list(self):
-        self.assertEqual(factor_list(5.5), "Please enter a positive integer")
+        self.assertEqual(factor_list(5.5), "Please enter an integer")
         self.assertEqual(factor_list(-1), "Please enter a positive integer")
         self.assertTrue(factor_list(23), list)
         self.assertEqual(factor_list(4), [1, 2, 4])
@@ -70,18 +70,18 @@ class MathLibraryTest(unittest.TestCase):
         self.assertEqual(factor_list(45), [1, 3, 5, 9, 15, 45])
 
     def test_factorial(self):
-        self.assertEqual(factorial(0.1), "Please enter a non-negative integer")
+        self.assertEqual(factorial(0.1), "Please enter an integer")
         self.assertEqual(factorial(-1), "Please enter a non-negative integer")
         self.assertEqual(factorial("0"), 1)
         self.assertEqual(factorial(0), factorial(1.0))
-        self.assertEqual(factorial("wone"), "Please enter a non-negative integer")
+        self.assertEqual(factorial("wone"), "Please enter an integer")
         self.assertEqual(factorial(5), 120)
         self.assertEqual(factorial(3), 6)
 
     def test_fibonacci(self):
         self.assertEqual(fibonacci(0), 0)
         self.assertEqual(fibonacci(9), 34)
-        self.assertEqual(fibonacci('two'), 'Please enter a positive integer')
+        self.assertEqual(fibonacci('two'), 'Please enter an integer')
         self.assertEqual(fibonacci(-1), 'Please enter a positive integer')
         self.assertEqual(fibonacci('5'), 5)
         self.assertEqual(fibonacci(3.0), 2)
@@ -91,11 +91,16 @@ class MathLibraryTest(unittest.TestCase):
         self.assertTrue(goldbach_pair(15), (13, 1))
 
     def test_is_integer(self):
-        self.assertTrue(is_integer(1.0))
-        self.assertFalse(is_integer(1.0001))
-        self.assertTrue(is_integer("1.0"))
-        self.assertFalse(is_integer("wone"))
-        self.assertTrue(is_integer(-2))
+        @is_integer
+        def test_func(number):
+            input_value = number
+            return isinstance(input_value, int)
+
+        self.assertTrue(test_func(1.0))
+        self.assertEqual(test_func(1.0001), "Please enter an integer")
+        self.assertTrue(test_func("1.0"))
+        self.assertEqual(test_func("wone"), "Please enter an integer")
+        self.assertTrue(test_func(-2))
 
     def test_is_prime(self):
         self.assertFalse(is_prime(1))
@@ -105,8 +110,8 @@ class MathLibraryTest(unittest.TestCase):
         self.assertTrue(is_prime(29.0))
         self.assertFalse(is_prime(145.0))
         self.assertFalse(is_prime(0))
-        self.assertEqual(is_prime(-1), 'Please enter a positive integer greater than 1')
-        self.assertEqual(is_prime('twenty three'), 'Please enter a positive integer greater than 1')
+        self.assertFalse(is_prime(-1))
+        self.assertEqual(is_prime('twenty three'), 'Please enter an integer')
 
     def test_largest_prime_factor(self):
         self.assertEqual(largest_prime_factor(29), 'Please enter a non-prime integer greater than 1')
@@ -118,7 +123,8 @@ class MathLibraryTest(unittest.TestCase):
 
     def test_least_common_multiple(self):
         self.assertEqual(least_common_multiple([5, 10, 15]), 30)
-        self.assertEqual(least_common_multiple([2, 4, 6, 8]), least_common_multiple([8, 3]))
+        self.assertEqual(least_common_multiple(
+            [2, 4, 6, 8]), least_common_multiple([8, 3]))
 
     def test_lexicographic_permutation(self):
         self.assertTrue(isinstance(lexicographic_permutation("01", 1), str))
@@ -140,9 +146,9 @@ class MathLibraryTest(unittest.TestCase):
 
     def test_nth_prime(self):
         self.assertEqual(nth_prime(-2), 'Please enter an integer greater than 1')
-        self.assertEqual(nth_prime(6.1), 'Please enter an integer greater than 1')
+        self.assertEqual(nth_prime(6.1), 'Please enter an integer')
         self.assertEqual(nth_prime(0), 'Please enter an integer greater than 1')
-        self.assertEqual(nth_prime('six'), 'Please enter an integer greater than 1')
+        self.assertEqual(nth_prime('six'), 'Please enter an integer')
         self.assertEqual(nth_prime(1.0), 2)
         self.assertEqual(nth_prime(2), 3)
         self.assertEqual(nth_prime(6), 13)
