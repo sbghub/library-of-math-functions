@@ -3,6 +3,7 @@
 # Usage
 1. Clone library-of-math-functions into the directory you'd want to use it from
 2. You should be able to import "math_library.py" into the .py file you'd want to use it from
+
 2a. Run a series of tests on these functions with "$ python test_math_library.py"
 
 # Description
